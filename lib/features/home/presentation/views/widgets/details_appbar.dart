@@ -9,7 +9,8 @@ class Details_Appbar extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         IconButton(onPressed: () {}, icon: const Icon(Icons.close)),
-        IconButton(onPressed: () {}, icon: const Icon(Icons.shopping_cart_outlined))
+        IconButton(
+            onPressed: () {}, icon: const Icon(Icons.shopping_cart_outlined))
       ],
     );
   }
