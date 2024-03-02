@@ -44,6 +44,6 @@ class SearchListView extends StatelessWidget {
       ),
       itemCount: 12,
     );
-    ;
+    
   }
 }
