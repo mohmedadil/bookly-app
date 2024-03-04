@@ -22,7 +22,7 @@ class BestSellerListView extends StatelessWidget {
             itemCount: state.books.length,
           );
         } else if (state is NewestBooksFailure) {
-          return const Text('error');
+          return Center(child: Text(state.errMessage));
         } else {
           return const Center(child: CircularProgressIndicator());
         }

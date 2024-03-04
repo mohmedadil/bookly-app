@@ -19,7 +19,7 @@ class BookListViewItem extends StatelessWidget {
         height: 120,
         child: Row(
           children: [
-            Custom_Book_Item(imageUrl: book.volumeInfo.imageLinks.thumbnail),
+            Custom_Book_Item(imageUrl: book.volumeInfo.imageLinks?.thumbnail??''),
             const SizedBox(
               width: 30,
             ),
@@ -40,7 +40,7 @@ class BookListViewItem extends StatelessWidget {
                     height: 3,
                   ),
                   Text(
-                    book.volumeInfo.authors![0],
+                    book.volumeInfo.authors?[0]??'',
                     style: Styles.textStyle14,
                   ),
                   const SizedBox(

@@ -30,9 +30,9 @@ class ServerFailure extends Failure {
         if (dioError.message!.contains('SocketException')) {
           return ServerFailure('No internet connection');
         }
-        return ServerFailure('unexpected error , pls try again');
-      default: return ServerFailure(' there was an error, please try again ');
-    
+        return ServerFailure('No Internet Connection');
+      default:
+        return ServerFailure(' there was an error, please try again ');
     }
   }
 

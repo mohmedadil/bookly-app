@@ -22,12 +22,12 @@ class FeatureBooksListView extends StatelessWidget {
                     padding: const EdgeInsets.symmetric(horizontal: 8.0),
                     child: Custom_Book_Item(
                         imageUrl:
-                            state.books[index].volumeInfo.imageLinks.thumbnail),
+                            state.books[index].volumeInfo.imageLinks?.thumbnail??''),
                   );
                 }),
           );
         } else if (state is FeaturedbooksFailure) {
-          return Text(state.errMessage);
+          return Center(child: Text(state.errMessage));
         } else {
           return Center(child: CircularProgressIndicator());
         }
