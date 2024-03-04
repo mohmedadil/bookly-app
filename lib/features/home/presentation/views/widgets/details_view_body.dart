@@ -44,7 +44,7 @@ class Details_View_body extends StatelessWidget {
             const SizedBox(
               height: 18,
             ),
-            const BookRating(mainAxisAlignment: MainAxisAlignment.center),
+            const BookRating(mainAxisAlignment: MainAxisAlignment.center,count: 5,rating: 5),
             const SizedBox(
               height: 37,
             ),
