@@ -1,5 +1,6 @@
 import 'package:bookly/core/utils/style.dart';
 import 'package:bookly/core/widgets/custom_button.dart';
+import 'package:bookly/features/home/data/models/book_model/book_model.dart';
 import 'package:bookly/features/home/presentation/views/widgets/Custom_book_Item.dart';
 import 'package:bookly/features/home/presentation/views/widgets/book_action.dart';
 import 'package:bookly/features/home/presentation/views/widgets/book_rating.dart';
@@ -8,7 +9,8 @@ import 'package:bookly/features/home/presentation/views/widgets/similiarbookslis
 import 'package:flutter/material.dart';
 
 class Details_View_body extends StatelessWidget {
-  const Details_View_body({super.key});
+  const Details_View_body({super.key, required this.book});
+  final BookModel book;
 
   @override
   Widget build(BuildContext context) {
@@ -21,14 +23,16 @@ class Details_View_body extends StatelessWidget {
             const Details_Appbar(),
             Padding(
               padding: EdgeInsets.symmetric(horizontal: width * 0.2),
-              child: Custom_Book_Item(imageUrl: 'test'),
+              child: Custom_Book_Item(
+                  imageUrl: book.volumeInfo.imageLinks?.thumbnail ?? ''),
             ),
             const SizedBox(
               height: 43,
             ),
-            const Text(
-              'Atomic Habits',
+            Text(
+              book.volumeInfo.title!,
               style: Styles.textStyle30,
+              textAlign: TextAlign.center,
             ),
             const SizedBox(
               height: 6,
@@ -36,7 +40,7 @@ class Details_View_body extends StatelessWidget {
             Opacity(
               opacity: 0.7,
               child: Text(
-                'Games A Clear',
+                book.volumeInfo.authors?[0] ?? "",
                 style: Styles.textStyle18.copyWith(
                     fontStyle: FontStyle.italic, fontWeight: FontWeight.w500),
               ),
@@ -44,11 +48,14 @@ class Details_View_body extends StatelessWidget {
             const SizedBox(
               height: 18,
             ),
-            const BookRating(mainAxisAlignment: MainAxisAlignment.center,count: 5,rating: 5),
+            const BookRating(
+                mainAxisAlignment: MainAxisAlignment.center,
+                count: 5,
+                rating: 5),
             const SizedBox(
               height: 37,
             ),
-            const BookAction(),
+             BookAction(book: book),
             const SizedBox(
               height: 50,
             ),

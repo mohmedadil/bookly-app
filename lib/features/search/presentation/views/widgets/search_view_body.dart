@@ -1,27 +1,36 @@
 import 'package:bookly/core/utils/style.dart';
+import 'package:bookly/features/home/presentation/views/widgets/Custom_book_Item.dart';
 import 'package:bookly/features/home/presentation/views/widgets/best_seller_item.dart';
+import 'package:bookly/features/search/presentation/manager/fetchsearch/fetchsearch_cubit.dart';
 import 'package:bookly/features/search/presentation/views/widgets/custom_textfield.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class SeachViewBody extends StatelessWidget {
-  const SeachViewBody({super.key});
-
+  SeachViewBody({super.key});
+  String? search;
   @override
   Widget build(BuildContext context) {
-    return const Padding(
-      padding: EdgeInsets.symmetric(horizontal: 30),
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 30),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          CustomSearchTextField(),
-          SizedBox(
+          CustomSearchTextField(
+            onChanged: (value) {
+              search = value;
+              BlocProvider.of<FetchsearchCubit>(context)
+                  .fetchSearchResult(search: value);
+            },
+          ),
+          const SizedBox(
             height: 16,
           ),
-          Text(
+          const Text(
             'Search Result',
             style: Styles.textStyle20,
           ),
-          SizedBox(
+          const SizedBox(
             height: 16,
           ),
           Expanded(child: SearchListView()),
@@ -32,19 +41,31 @@ class SeachViewBody extends StatelessWidget {
 }
 
 class SearchListView extends StatelessWidget {
-  const SearchListView({super.key});
+  const SearchListView({
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
-      padding: EdgeInsets.zero,
-      itemBuilder: (context, index) => const Padding(
-        padding: EdgeInsets.symmetric(vertical: 10),
-        // child: BookListViewItem(),
-        child: Text('test'),
-      ),
-      itemCount: 12,
-    );
-    
+    return BlocBuilder<FetchsearchCubit, FetchsearchState>(
+        builder: (context, state) {
+      if (state is FetchsearchSuccess) {
+        return ListView.builder(
+          padding: EdgeInsets.zero,
+          itemBuilder: (context, index) => Padding(
+            padding: const EdgeInsets.symmetric(vertical: 10),
+            // child: BookListViewItem(),
+            child:BookListViewItem(book: state.books[index])
+          ),
+          itemCount: state.books.length,
+        );
+      } else if (state is FetchsearchLoading) {
+        return Center(child: CircularProgressIndicator());
+      } else if (state is FetchsearchFailure) {
+        return Center(child: Text('No Item Found'));
+      } else {
+        return Center(child: Text('Try To Search Now'));
+      }
+    });
   }
 }
